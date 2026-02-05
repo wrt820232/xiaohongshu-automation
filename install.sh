@@ -19,21 +19,45 @@ fi
 # 3. 创建 images 目录
 mkdir -p images
 
-# 4. 注册为 Claude Code skill
-SKILL_DIR="$HOME/.claude/skills/xiaohongshu-automation"
-if [ ! -d "$SKILL_DIR" ]; then
-  mkdir -p "$SKILL_DIR"
-  cp SKILL.md "$SKILL_DIR/SKILL.md"
-  echo "✅ Skill 已注册到 $SKILL_DIR"
-else
-  echo "⚠️  Skill 目录已存在: $SKILL_DIR"
-  read -p "是否覆盖? (y/N) " -n 1 -r
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    cp SKILL.md "$SKILL_DIR/SKILL.md"
-    echo "✅ Skill 已更新"
-  fi
-fi
+# 4. 检测并注册 Skill
+echo ""
+echo "📋 选择要注册的平台："
+echo "  1) OpenClaw（推荐）"
+echo "  2) Claude Code"
+echo "  3) 两者都注册"
+read -p "请选择 [1/2/3]: " -n 1 -r PLATFORM_CHOICE
+echo ""
+
+install_openclaw_skill() {
+  OPENCLAW_SKILL_DIR="$HOME/.openclaw/workspace/skills/xiaohongshu-automation"
+  mkdir -p "$OPENCLAW_SKILL_DIR"
+  cp SKILL.md "$OPENCLAW_SKILL_DIR/SKILL.md"
+  echo "✅ OpenClaw Skill 已注册到 $OPENCLAW_SKILL_DIR"
+}
+
+install_claude_skill() {
+  CLAUDE_SKILL_DIR="$HOME/.claude/skills/xiaohongshu-automation"
+  mkdir -p "$CLAUDE_SKILL_DIR"
+  cp SKILL.md "$CLAUDE_SKILL_DIR/SKILL.md"
+  echo "✅ Claude Code Skill 已注册到 $CLAUDE_SKILL_DIR"
+}
+
+case $PLATFORM_CHOICE in
+  1)
+    install_openclaw_skill
+    ;;
+  2)
+    install_claude_skill
+    ;;
+  3)
+    install_openclaw_skill
+    install_claude_skill
+    ;;
+  *)
+    echo "默认安装到 OpenClaw..."
+    install_openclaw_skill
+    ;;
+esac
 
 echo ""
 echo "🎉 安装完成！"
@@ -44,7 +68,7 @@ echo "   获取地址: https://unsplash.com/developers"
 echo ""
 echo "2. 确保 OpenClaw 浏览器已启动（CDP 端口 18800）"
 echo ""
-echo "3. 在 Claude Code 中使用关键词触发："
+echo "3. 使用关键词触发 Skill："
 echo "   - 小红书"
 echo "   - xiaohongshu"
 echo "   - xhs"

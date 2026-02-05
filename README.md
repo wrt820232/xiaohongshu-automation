@@ -126,46 +126,57 @@ MIT
 
 ---
 
-## 🔧 Claude Code Skill 安装
+## 🔧 Skill 安装（支持 OpenClaw / Claude Code）
 
-本项目可以作为 Claude Code 的 skill 使用，实现小红书自动化操作。
+本项目可以作为 **OpenClaw** 或 **Claude Code** 的 skill 使用，实现小红书自动化操作。
 
-### 方式一：一键安装（推荐）
+### 一键安装（推荐）
 
 ```bash
 # 克隆仓库
-git clone https://github.com/YOUR_USERNAME/xiaohongshu-automation.git
+git clone https://github.com/wrt820232/xiaohongshu-automation.git
 cd xiaohongshu-automation
 
-# 运行安装脚本
+# 运行安装脚本（会提示选择平台）
 chmod +x install.sh
 ./install.sh
 ```
 
-### 方式二：手动安装
+安装脚本会提示选择：
+- **1) OpenClaw** - 注册到 `~/.openclaw/workspace/skills/`
+- **2) Claude Code** - 注册到 `~/.claude/skills/`
+- **3) 两者都注册**
 
-1. **克隆仓库**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/xiaohongshu-automation.git
-   cd xiaohongshu-automation
-   npm install
-   ```
+### 手动安装
 
-2. **配置环境变量**
-   ```bash
-   cp .env.example .env
-   # 编辑 .env，填入 UNSPLASH_ACCESS_KEY
-   ```
+#### OpenClaw 用户
+```bash
+git clone https://github.com/wrt820232/xiaohongshu-automation.git
+cd xiaohongshu-automation
+npm install
+cp .env.example .env
+# 编辑 .env，填入 UNSPLASH_ACCESS_KEY
 
-3. **注册 Skill**
-   ```bash
-   mkdir -p ~/.claude/skills/xiaohongshu-automation
-   cp SKILL.md ~/.claude/skills/xiaohongshu-automation/
-   ```
+# 注册 Skill
+mkdir -p ~/.openclaw/workspace/skills/xiaohongshu-automation
+cp SKILL.md ~/.openclaw/workspace/skills/xiaohongshu-automation/
+```
+
+#### Claude Code 用户
+```bash
+git clone https://github.com/wrt820232/xiaohongshu-automation.git
+cd xiaohongshu-automation
+npm install
+cp .env.example .env
+
+# 注册 Skill
+mkdir -p ~/.claude/skills/xiaohongshu-automation
+cp SKILL.md ~/.claude/skills/xiaohongshu-automation/
+```
 
 ### 验证安装
 
-在 Claude Code 中输入以下任一关键词，应该能触发此 skill：
+输入以下任一关键词触发 skill：
 - `小红书`
 - `xiaohongshu`
 - `xhs`
@@ -188,7 +199,7 @@ chmod +x install.sh
 
 1. **OpenClaw 浏览器**：需要启动并开启 CDP 端口 18800
 2. **已登录小红书**：首次使用需在浏览器中手动登录
-3. **Playwright MCP**：确保 Claude Code 已配置 Playwright MCP
+3. **Playwright MCP**：确保已配置 Playwright MCP
 
 ## 🔗 相关链接
 
