@@ -553,20 +553,24 @@ done
 5. 或者直接获取图片 URL 后用 curl 下载
 ```
 
-**关键词建议（必须用英文）：**
+**关键词转换规则：**
 
-| 中文主题 | 推荐英文关键词 |
-|---------|---------------|
-| 大理旅居 | dali yunnan, chinese ancient town, mountain lake china |
-| 咖啡 | coffee shop, hand drip coffee, latte art, cafe interior, barista |
-| 手冲咖啡 | pour over coffee, v60, chemex, manual brew |
-| 美食 | food photography, breakfast, homemade cooking, asian food |
-| 穿搭 | outfit, fashion, street style, ootd, minimal fashion |
-| 旅行 | travel, landscape, adventure, wanderlust, backpacker |
-| 家居 | home interior, cozy room, minimalist decor, living room |
-| 健身 | fitness, workout, gym, yoga, running |
-| 自然风光 | nature, mountain, lake, sunset, forest |
-| 城市 | city, urban, architecture, street, skyline |
+根据话题/主题内容，AI 自动将中文转换为合适的英文搜索关键词。
+
+**转换原则：**
+1. 将中文话题翻译成对应的英文词汇
+2. 添加相关的场景词（如 photography, aesthetic, lifestyle）
+3. 使用 2-4 个关键词组合，用空格分隔
+4. 优先使用具体、描述性的词汇
+
+**自动转换示例：**
+```
+话题: "早餐吃什么" → 关键词: "breakfast food morning meal"
+话题: "咖啡探店" → 关键词: "coffee shop cafe interior latte"
+话题: "穿搭分享" → 关键词: "outfit fashion style ootd"
+话题: "旅行攻略" → 关键词: "travel landscape adventure"
+话题: "家居装饰" → 关键词: "home interior decor cozy"
+```
 
 **图片尺寸参数：**
 
@@ -577,47 +581,32 @@ done
 | `1440x1080` | 4:3 横版 | 横版展示 |
 | `1920x1080` | 16:9 宽屏 | 视频封面 |
 
-**使用示例：**
+**完整工作流程示例：**
 ```
-用户: 帮我下载3张咖啡相关的图片
-AI:
-1. 使用关键词 "coffee shop, latte art, cafe"
-2. 从 Unsplash 下载 3 张 1080x1440 竖版图片
-3. 保存到项目 images 目录
+用户: 获取最新的小红书热点，发布图文并且寻找配图
+
+AI 执行步骤:
+1. 调用 get_hot_topics 获取热门话题
+   → 获取到话题: "早餐吃什么"
+
+2. 将话题转换为英文关键词
+   → "breakfast food morning delicious"
+
+3. 调用 Unsplash 搜索并下载相关图片
+   → searchAndDownload("breakfast food morning", "./images", 3, {orientation: "portrait"})
+
+4. 根据话题生成文章内容
+   → 标题、正文、推荐话题标签
+
+5. 使用下载的图片发布到小红书
+   → publish_content(title, content, images)
 ```
 
 **注意事项：**
 - Unsplash 图片完全免费商用，无需标注来源
-- 建议使用英文关键词，搜索结果更丰富
+- AI 根据话题内容智能生成英文关键词，无需固定映射表
 - 下载间隔建议 2 秒以上，避免被限流
-- 小红书推荐使用 3:4 竖版图片
-
-**关键词建议（英文效果更好）：**
-
-| 中文主题 | 推荐英文关键词 |
-|---------|---------------|
-| 大理旅居 | dali yunnan, chinese ancient town, mountain lake |
-| 咖啡 | coffee shop, hand drip coffee, latte art, cafe interior |
-| 美食 | food photography, breakfast, homemade cooking |
-| 穿搭 | outfit, fashion, street style, ootd |
-| 旅行 | travel, landscape, adventure, wanderlust |
-| 家居 | home interior, cozy room, minimalist decor |
-| 健身 | fitness, workout, gym, yoga |
-
-**使用示例：**
-```
-用户: 帮我下载3张大理咖啡相关的图片
-AI:
-1. 使用关键词 "dali coffee shop yunnan"
-2. 从 Unsplash 下载 3 张无水印图片
-3. 保存到项目目录
-```
-
-**注意事项：**
-- Unsplash/Pexels 图片可免费商用，无需标注来源
-- 建议下载后检查图片是否符合主题
-- 小红书推荐图片比例 3:4，可用 `orientation=portrait` 参数
-- 避免频繁请求，建议间隔 1 秒
+- 小红书推荐使用 3:4 竖版图片（orientation: portrait）
 
 ---
 
