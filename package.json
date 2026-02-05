@@ -1,0 +1,26 @@
+{
+  "name": "xiaohongshu-automation",
+  "version": "1.0.0",
+  "description": "小红书自动化控制 - 使用 Unsplash 获取高质量图片",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "download": "ts-node src/unsplash.ts",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": [
+    "xiaohongshu",
+    "小红书",
+    "automation",
+    "unsplash"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.19.31",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}
